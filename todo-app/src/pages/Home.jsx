@@ -1,7 +1,7 @@
 import LoginForm from '../components/LoginForm';
 
 function Home() {
-  return <LoginForm></LoginForm>;
+  return <LoginForm />;
 }
 
 export default Home;

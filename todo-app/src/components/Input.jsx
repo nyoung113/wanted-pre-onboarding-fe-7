@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 
-const Input = ({ placeholder, errorMessage, isValidate, onChange }) => {
+const Input = ({
+  name = '',
+  type = 'text',
+  placeholder = '',
+  value = '',
+  errorMessage = '',
+  onChange,
+}) => {
   return (
     <InputContainer>
       <StyledInput
+        name={name}
+        type={type}
+        value={value}
         placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(e)}
       ></StyledInput>
-      {isValidate ? '' : <ErrorMessage>{errorMessage}</ErrorMessage>}
+      <ErrorMessage>{errorMessage}</ErrorMessage>
     </InputContainer>
   );
 };
