@@ -40,8 +40,6 @@ const LoginForm = () => {
 
   return (
     <FormContainer>
-      <FormTitle>로그인 / 회원가입</FormTitle>
-
       <form>
         <Input
           name={INPUT_EMAIL_NAME}
@@ -73,13 +71,23 @@ export default LoginForm;
 
 const FormContainer = styled.div`
   display: flex;
+  width: 100%;
+  align-items: center;
   flex-direction: column;
-  padding: 20px;
 `;
-const FormTitle = styled.h2``;
 
 const Button = styled.button`
+  margin: 1rem;
+  width: 10rem;
+  height: 3rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: gray;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
   :hover {
     cursor: pointer;
+    background-color: black;
   }
 `;

@@ -17,7 +17,9 @@ const Input = ({
         placeholder={placeholder}
         onChange={(e) => (onChange ? onChange(e) : '')}
       ></StyledInput>
-      <ErrorMessage>{errorMessage}</ErrorMessage>
+      <ErrorMessage visible={errorMessage ? true : false}>
+        {errorMessage}
+      </ErrorMessage>
     </InputContainer>
   );
 };
@@ -30,9 +32,13 @@ const InputContainer = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  height: 2rem;
+  height: 3rem;
+  border: none;
+  margin: 0.5rem 0;
+  font-size: 1rem;
 `;
 
 const ErrorMessage = styled.p`
   color: red;
+  display: ${(props) => (props.visible ? 'inline' : 'none')};
 `;

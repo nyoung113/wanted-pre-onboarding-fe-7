@@ -66,12 +66,27 @@ export default Main;
 
 const MainContainer = styled.div`
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const AddInputContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const AddButton = styled.button`
-  width: 3rem;
+  margin: 1rem;
+  width: 4rem;
+  height: 3rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: gray;
+  color: white;
+  font-size: 1rem;
+  :hover {
+    cursor: pointer;
+    background-color: black;
+  }
 `;
