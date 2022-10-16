@@ -23,14 +23,12 @@ const useForm = ({ initialValues, onSignUp, onSignIn, validate }) => {
     setIsLoading(true);
     e.preventDefault();
     onSignIn(values);
-    alert('제출');
   };
 
   const handleSignUp = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     onSignUp(values);
-    alert('제출');
   };
 
   return {
