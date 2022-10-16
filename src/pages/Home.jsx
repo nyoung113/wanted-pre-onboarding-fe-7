@@ -1,18 +1,25 @@
 import LoginForm from '../components/LoginForm';
-import LocalStorage from '../storage/localStorage';
+import { getItem } from '../storage/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { LOCAL_STORAGE_TOKEN_KEY } from '../constant';
 import { useEffect } from 'react';
+import styled from 'styled-components';
+
 function Home() {
-  const localStorage = new LocalStorage();
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+    if (getItem(LOCAL_STORAGE_TOKEN_KEY)) {
       navigate('/todo');
     }
   }, []);
 
-  return <LoginForm />;
+  return (
+    <div>
+      <FormTitle>로그인 / 회원가입</FormTitle>
+      <LoginForm />
+    </div>
+  );
 }
 
 export default Home;
+const FormTitle = styled.h2``;

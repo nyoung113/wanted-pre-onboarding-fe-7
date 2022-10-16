@@ -1,11 +1,8 @@
-export default class LocalStorage {
-  constructor() {
-    this.storage = window.localStorage;
-  }
-  getItem(key, defaultValue) {
-    return JSON.parse(this.storage.getItem(key)) ?? defaultValue;
-  }
-  setItem(key, value) {
-    this.storage.setItem(key, JSON.stringify(value));
-  }
-}
+const storage = window.localStorage;
+export const getItem = (key) => {
+  return JSON.parse(storage.getItem(key)) ?? null;
+};
+
+export const setItem = (key, value) => {
+  storage.setItem(key, JSON.stringify(value));
+};

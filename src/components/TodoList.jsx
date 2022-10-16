@@ -29,12 +29,12 @@ const TodoList = ({ todos, onEdit, onDelete }) => {
       {todos.map((todo) => (
         <Todo key={todo.id}>
           {isEditingList.get(todo.id)?.isEditing ? (
-            <input
+            <StyledInput
               value={isEditingList.get(todo.id)?.todo}
               onChange={(e) => {
                 handleEditTodo(e, todo.id);
               }}
-            ></input>
+            ></StyledInput>
           ) : (
             <TodoText
               completed={todo.isCompleted}
@@ -69,7 +69,7 @@ const TodoList = ({ todos, onEdit, onDelete }) => {
                   });
                 }}
               >
-                취소
+                ❎
               </Button>
             </div>
           ) : (
@@ -117,8 +117,28 @@ const TodoText = styled.p`
 `;
 
 const Button = styled.button`
-  padding: 0.1rem;
+  margin: 0.1rem;
+  width: 4rem;
+  height: 3rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: lightgray;
+  color: white;
+  font-size: 1rem;
   :hover {
     cursor: pointer;
+    background-color: gray;
   }
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  height: 3rem;
+  border: none;
+  margin: 0 0.5rem 0.5rem 0.5rem;
+  font-size: 1rem;
+`;
+
+const Flex = styled.input`
+  display: flex;
 `;

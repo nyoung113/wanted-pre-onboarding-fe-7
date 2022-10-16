@@ -3,12 +3,11 @@ import Input from '../components/Input';
 import TodoList from '../components/TodoList';
 import { useState, useEffect } from 'react';
 import { getTodos, postTodos, updateTodo, deleteTodo } from '../api/main';
-import LocalStorage from '../storage/localStorage';
+import { getItem } from '../storage/localStorage';
 import { LOCAL_STORAGE_TOKEN_KEY } from '../constant';
 import { useNavigate } from 'react-router-dom';
 
 function Main() {
-  const localStorage = new LocalStorage();
   const navigate = useNavigate();
 
   const [todo, setTodo] = useState('');
@@ -20,7 +19,7 @@ function Main() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+    if (!getItem(LOCAL_STORAGE_TOKEN_KEY)) {
       navigate('/');
     }
     getTodoList();
@@ -67,12 +66,27 @@ export default Main;
 
 const MainContainer = styled.div`
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const AddInputContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const AddButton = styled.button`
-  width: 3rem;
+  margin: 1rem;
+  width: 4rem;
+  height: 3rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: gray;
+  color: white;
+  font-size: 1rem;
+  :hover {
+    cursor: pointer;
+    background-color: black;
+  }
 `;
