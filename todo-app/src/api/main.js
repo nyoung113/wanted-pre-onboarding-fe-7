@@ -31,3 +31,79 @@ export const postSignUp = async ({ email, password }) => {
     alert(error.response.data.message);
   }
 };
+
+export const getTodos = async () => {
+  try {
+    const localStorage = new LocalStorage();
+    const response = await instance.get('/todos', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          LOCAL_STORAGE_TOKEN_KEY
+        )}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postTodos = async (todo) => {
+  try {
+    const localStorage = new LocalStorage();
+    const response = await instance.post(
+      '/todos',
+      {
+        todo,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            LOCAL_STORAGE_TOKEN_KEY
+          )}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateTodo = async ({ id, todo, isCompleted }) => {
+  try {
+    const localStorage = new LocalStorage();
+    const response = await instance.put(
+      `/todos/${id}`,
+      {
+        todo,
+        isCompleted,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            LOCAL_STORAGE_TOKEN_KEY
+          )}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteTodo = async ({ id }) => {
+  try {
+    const localStorage = new LocalStorage();
+    await instance.delete(`/todos/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          LOCAL_STORAGE_TOKEN_KEY
+        )}`,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

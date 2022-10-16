@@ -12,7 +12,7 @@ import {
 } from '../constant';
 import { postSignIn, postSignUp } from '../api/main';
 
-function LoginForm() {
+const LoginForm = () => {
   const navigate = useNavigate();
   const {
     values,
@@ -28,8 +28,7 @@ function LoginForm() {
     },
     onSignIn: async (values) => {
       const response = await postSignIn(values);
-      console.log(response);
-      if (response) {
+      if (response.statusText === 'OK') {
         navigate('/todo');
       }
     },
@@ -68,7 +67,7 @@ function LoginForm() {
       </form>
     </FormContainer>
   );
-}
+};
 
 export default LoginForm;
 

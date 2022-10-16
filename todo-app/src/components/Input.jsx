@@ -15,7 +15,7 @@ const Input = ({
         type={type}
         value={value}
         placeholder={placeholder}
-        onChange={(e) => onChange(e)}
+        onChange={(e) => (onChange ? onChange(e) : '')}
       ></StyledInput>
       <ErrorMessage>{errorMessage}</ErrorMessage>
     </InputContainer>
