@@ -3,12 +3,11 @@ import Input from '../components/Input';
 import TodoList from '../components/TodoList';
 import { useState, useEffect } from 'react';
 import { getTodos, postTodos, updateTodo, deleteTodo } from '../api/main';
-import LocalStorage from '../storage/localStorage';
+import { getItem } from '../storage/localStorage';
 import { LOCAL_STORAGE_TOKEN_KEY } from '../constant';
 import { useNavigate } from 'react-router-dom';
 
 function Main() {
-  const localStorage = new LocalStorage();
   const navigate = useNavigate();
 
   const [todo, setTodo] = useState('');
@@ -20,7 +19,7 @@ function Main() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+    if (!getItem(LOCAL_STORAGE_TOKEN_KEY)) {
       navigate('/');
     }
     getTodoList();
