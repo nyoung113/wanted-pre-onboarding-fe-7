@@ -106,20 +106,30 @@ const Todo = styled.li`
   display: flex;
   align-items: center;
   height: 2rem;
+  margin-bottom: 2rem;
 `;
 
 const TodoText = styled.p`
   width: 20rem;
+  margin: 2rem;
   text-decoration: ${(props) => (props.completed ? 'line-through' : 'none')};
   :hover {
     cursor: pointer;
   }
 `;
 
+const StyledInput = styled.input`
+  width: 20rem;
+  height: 2rem;
+  border: none;
+  margin: 0 2rem;
+  font-size: 1rem;
+`;
+
 const Button = styled.button`
   margin: 0.1rem;
-  width: 4rem;
-  height: 3rem;
+  width: 2rem;
+  height: 1.5rem;
   border: none;
   border-radius: 1rem;
   background-color: lightgray;
@@ -129,14 +139,6 @@ const Button = styled.button`
     cursor: pointer;
     background-color: gray;
   }
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 3rem;
-  border: none;
-  margin: 0 0.5rem 0.5rem 0.5rem;
-  font-size: 1rem;
 `;
 
 const Flex = styled.input`
