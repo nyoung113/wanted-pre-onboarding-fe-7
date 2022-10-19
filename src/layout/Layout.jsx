@@ -18,7 +18,7 @@ const StyledLayout = styled.div`
   width: 40rem;
   height: 100vh;
   display: flex;
-  background-color: beige;
+  background-color: #eeeeee;
   justify-content: center;
 `;
 
