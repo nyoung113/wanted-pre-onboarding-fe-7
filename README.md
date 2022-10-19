@@ -4,7 +4,12 @@
 https://wanted-pre-onboarding-fe-7-dusky.vercel.app/
 
 ### 실행 방법
-1. 레포지토리 클론
+1. 레포지토리 클론 후
+
+```
+npm install 
+```
+
 2. 개발 환경 실행 방법
 ```
 npm start
