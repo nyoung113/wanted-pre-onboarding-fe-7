@@ -14,82 +14,6 @@ npm install
 ```
 npm start
 ```
-3. 배포 환경 실행 방법
-```
-npm run build
-```
-
-후 서버에서 실행
-
-
-
-# 과제 구현 체크리스트
-
-- [X] Create React App을 이용해 과제를 구현해주세요 
-- [X] 함수 컴포넌트를 이용해서 진행해주세요
-- [X] UI는 지원자 개인이 생각했을 때 자연스러운 형태로 구현해주세요, UI는 평가에 영향을 미치지 않습니다.
-- [X] README.md 작성은 필수입니다. 아래의 사항은 반드시 포함되도록 해주세요
-  - 프로젝트의 실행 방법
-  - 데모 영상
-  - 데모 영상은 배포 링크로 대체 가능하며, 배포 시 가산점이 부여됩니다.
-- 기능구현에 직접적으로 연관된 라이브러리 사용은 허용되지 않습니다.(React-Query 등)
-- 사용가능한 라이브러리 목록은 아래와 같습니다.
-  - React Router
-  - HTTP Client 라이브러리(Axios 등)
-  - 스타일링 관련 라이브러리(Sass, Styled Components, Emotion 등)
-  - 아이콘 등 UI 관련 라이브러리(Font-Awesome, React-Icons, Bootstrap 등)
-  - 기능과 직접적인 연관이 없는 설정관련 라이브러리(craco, dotenv 등)
-
-## 과제
-
----
-
-### :: 1. 로그인 / 회원가입
-
--  [X] `/` 경로에 로그인 / 회원가입 기능을 개발해주세요
-  - 페이지 안에 이메일 입력창, 비밀번호 입력창, 제출 버튼이 포함된 형태로 구성해주세요
-  - 로그인, 회원가입을 별도의 경로로 분리해도 무방합니다.
-
-#### Assignment1
-
-- [X] 이메일과 비밀번호의 유효성 검사기능을 구현해주세요
-  - 이메일 조건: `@` 포함
-  - 비밀번호 조건: 8자 이상
-  - 입력된 이메일과 비밀번호가 위 조건을 만족할 때만 버튼이 활성화 되도록 해주세요
-  - 보안 상 실제 사용하고 계신 이메일과 패스워드말고 테스트용 이메일, 패스워드 사용을 권장드립니다.
-
-#### Assignment2
-
-- [X] 로그인 API를 호출하고, 올바른 응답을 받았을 때 `/todo` 경로로 이동해주세요
-  - 로그인 API는 로그인이 성공했을 시 Response Body에 JWT를 포함해서 응답합니다.
-  - 응답받은 JWT는 로컬 스토리지에 저장해주세요
-
-#### Assignment3
-
-- [X] 로그인 여부에 따른 리다이렉트 처리를 구현해주세요
-  - 로컬 스토리지에 토큰이 있는 상태로 `/` 페이지에 접속한다면 `/todo` 경로로 리다이렉트 시켜주세요
-  - 로컬 스토리지에 토큰이 없는 상태로 `/todo`페이지에 접속한다면 `/` 경로로 리다이렉트 시켜주세요
-
----
-
-### :: 2. 투두 리스트
-
-#### Assignment4
-
-- [X] `/todo`경로에 접속하면 투두 리스트의 목록을 볼 수 있도록 해주세요
-- 리스트 페이지에는 투두 리스트의 내용과 완료 여부가 표시되어야 합니다.
-=> 완료 여부는 가운대 줄로 드러납니다. 클릭 하면 완료된 것으로 간주하고 가운데 줄이 그어집니다
-- 리스트 페이지에는 입력창과 추가 버튼이 있고, 추가 버튼을 누르면 입력창의 내용이 새로운 투두 리스트로 추가되도록 해주세요
-
-#### Assignment5
-
-- [X] 투두 리스트의 수정, 삭제 기능을 구현해주세요
-  - 투두 리스트의 개별 아이템 우측에 수정버튼이 존재하고 해당 버튼을 누르면 수정모드가 활성화되고 투두 리스트의 내용을 수정할 수 있도록 해주세요
-  - 수정모드에서는 개별 아이템의 우측에 제출버튼과 취소버튼이 표시되며 해당 버튼을 통해서 수정 내용을 제출하거나 수정을 취소할 수 있도록 해주세요
-  - 투두 리스트의 개별 아이템 우측에 삭제버튼이 존재하고 해당 버튼을 누르면 투두 리스트가 삭제되도록 해주세요
-
-
----
 
 # 과제 구현 방식
 ## 폴더 구조
@@ -125,12 +49,12 @@ npm run build
 '/'
 - Main.js
 '/todo'
-
 두 페이지로 분리했습니다. 
+
 ### layout
 위의 두 페이지를 감싸기 위한 Layout.js를 만들었습니다. 
 
-라우팅 처리 시 레이아웃으로 감쌈
+각 페이지 컴포넌트를 레이아웃으로 감쌈
 ```js
 
 function App() {
@@ -162,25 +86,89 @@ function App() {
 ```
 ### components
 
+#### input
+#### LoginForm
+#### TodoList
+
 ## hooks
 ### useForm hook
+```js
+import { useEffect, useState } from 'react';
+
+const useForm = ({ initialValues, onSignUp, onSignIn, validate }) => {
+  const [values, setValues] = useState(initialValues);
+  const [errors, setErrors] = useState({});
+  const [isValidate, setIsValidate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+    setErrors(validate({ name, value, errors }));
+  };
+
+  useEffect(() => {
+    setIsValidate(
+      Object.values(errors).every((v) => v === '') &&
+        Object.values(errors).length === Object.values(initialValues).length
+    );
+  }, [values, errors, initialValues]);
+
+  const handleSignIn = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    onSignIn(values);
+  };
+
+  const handleSignUp = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    onSignUp(values);
+  };
+
+  return {
+    values,
+    errors,
+    isLoading,
+    isValidate,
+    handleChange,
+    handleSignIn,
+    handleSignUp,
+  };
+};
+
+export default useForm;
+```
+
+useForm Hook을 만들어서 signIn과 signUp 처리를 했습니다. 
+그 결과 컴포넌트 단에서의 로직을 최소화할 수 있었습니다. 
+
+### api
+axios instance 사용 
+
+
+
+### 로컬 스토리지
+로컬 스토리지 get / set을 함수화 해서 api 함수 안에서 사용했습니다. 
+
 
 ## 핵심 구현 사항
 1. Simple 인증 / 인가
 2. Simple CRUD
 
 
-
-
-
-
 ## 커밋 컨밴션
+```
+feat : 기능 구현
+refactor : 로직 개선 사항
+style : 스타일
+```
 
 
 #### 평가 사항
 - 코드의 가독성
-    - formatting
-    - 불필요한 코드들
+    - formatting => eslint / prettier 사용
+    - 불필요한 코드들 
     - 변수명
     - etc
 - 컴포넌트가 잘 분리되었는가?
