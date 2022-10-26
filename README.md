@@ -180,7 +180,7 @@ export const postSignIn = async ({ email, password }) => {
 
 export const postSignUp = async ({ email, password }) => {
   try {
-    await instance.post(`/auth/signup`, {
+    await instance.post(`/auth/signup`, {  
       email,
       password,
     });
@@ -189,19 +189,41 @@ export const postSignUp = async ({ email, password }) => {
   }
 };
 
-export const getTodos = async () => {
-  try {
-    const response = await instance.get('/todos', {
-      headers: {
-        Authorization: `Bearer ${getItem(LOCAL_STORAGE_TOKEN_KEY)}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
 ```
+
+/component/LoginForm.js
+LoginForm에서 함수로 감싸서 사용
+```js
+import { postSignIn, postSignUp } from '../api/main';
+
+const LoginForm = () => {
+  const navigate = useNavigate();
+  const {
+    values,
+    errors,
+    isValidate,
+    handleChange,
+    handleSignIn,
+    handleSignUp,
+  } = useForm({
+    initialValues: {
+      [INPUT_EMAIL_NAME]: '',
+      [INPUT_PASSWORD_NAME]: '',
+    },
+    onSignIn: async (values) => {
+      const response = await postSignIn(values);
+      if (response.statusText === 'OK') {
+        navigate('/todo');
+      }
+    },
+    onSignUp: (values) => { 
+      postSignUp(values);
+    },
+    validate: validateLoginForm,
+  });
+```
+
+- 부족한 점 => 회원가입 성공 시 알림 추가
 
 ### 3. CRUD
 
