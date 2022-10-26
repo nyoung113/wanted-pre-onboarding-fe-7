@@ -227,15 +227,17 @@ Main에서는 todo CRUD 함수들을 핸들러로 달았습니다.
 
 
 
-## 커밋 컨밴션
+## 커밋 컨벤션
 ```
+init : 프로젝트 세팅
 feat : 기능 구현
 refactor : 로직 개선 사항
 style : 스타일
+fix : 오류 수정
 ```
 
 
-#### 평가 사항
+#### 평가 사항 (참고)
 - 코드의 가독성
     - formatting => eslint / prettier 사용
     - 불필요한 코드들 
