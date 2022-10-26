@@ -49,46 +49,21 @@ npm start
 '/'
 - Main.js
 '/todo'
-두 페이지로 분리했습니다. 
 
 ### layout
 위의 두 페이지를 감싸기 위한 Layout.js를 만들었습니다. 
 
 각 페이지 컴포넌트를 레이아웃으로 감쌈
 ```js
-
-function App() {
-  return (
-    <div className="App">
-      <Routes>
-        <Route
-          exact={true}
-          path="/"
-          element={
-            <Layout>
-              <Home />
-            </Layout>
-          }
-        />
-        <Route
-          path="/todo"
-          element={
-            <Layout>
-              <Main />
-            </Layout>
-          }
-        />
-      </Routes>
-    </div>
-  );
-}
-
+    <Layout>
+        <Home />
+    </Layout>
 ```
 ### components
+- LoginForm
+- Input
+- TodoList
 
-#### input
-#### LoginForm
-#### TodoList
 
 ## hooks
 ### useForm hook
@@ -141,20 +116,115 @@ export default useForm;
 ```
 
 useForm Hook을 만들어서 signIn과 signUp 처리를 했습니다. 
-그 결과 컴포넌트 단에서의 로직을 최소화할 수 있었습니다. 
 
 ### api
 axios instance 사용 
+core 폴더에 instance를 만들고 export해서 사용했습니다.
 
+core/index.js
+```js
+import axios from 'axios';
+
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_URL,
+  timeout: 3000,
+  headers: { 'Content-Type': `application/json` },
+});
+
+export default instance;
+```
 
 
 ### 로컬 스토리지
 로컬 스토리지 get / set을 함수화 해서 api 함수 안에서 사용했습니다. 
 
-
 ## 핵심 구현 사항
-1. Simple 인증 / 인가
-2. Simple CRUD
+
+### 1. 리다이렉트
+
+react-router-dom의 useNavigate 사용해서 구현했습니다. 
+```js
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+      navigate('/todo');
+    }
+  }, []);
+```
+### 2. 인증 / 인가
+api/core에서 instance를 export해서 로그인 / 회원가입 api 함수를 만들었습니다. 
+
+api/main/index.js
+```js
+import instance from './core';
+import { getItem, setItem } from '../storage/localStorage';
+import { LOCAL_STORAGE_TOKEN_KEY } from '../constant';
+
+export const postSignIn = async ({ email, password }) => {
+  try {
+    const response = await instance.post(`/auth/signin`, {
+      email,
+      password,
+    });
+    setItem(LOCAL_STORAGE_TOKEN_KEY, response.data.access_token);
+    return response;
+  } catch (error) {
+    if (error.response.status === 401) {
+      alert('비밀번호가 다릅니다.');
+    }
+    if (error.response.status === 404) {
+      alert('회원정보가 없습니다.');
+    }
+  }
+};
+
+export const postSignUp = async ({ email, password }) => {
+  try {
+    await instance.post(`/auth/signup`, {
+      email,
+      password,
+    });
+  } catch (error) {
+    alert(error.response.data.message);
+  }
+};
+
+export const getTodos = async () => {
+  try {
+    const response = await instance.get('/todos', {
+      headers: {
+        Authorization: `Bearer ${getItem(LOCAL_STORAGE_TOKEN_KEY)}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+```
+
+### 3. CRUD
+
+Main 페이지에서 Input 컴포넌트와 todoList로 컴포넌트를 나눴습니다.
+Main에서는 todo CRUD 함수들을 핸들러로 달았습니다. 
+
+```
+  return (
+    <MainContainer>
+      <AddInputContainer>
+        <Input value={todo} onChange={handleChange} />
+        <AddButton onClick={handleClick}>추가</AddButton>
+      </AddInputContainer>
+      <TodoList
+        todos={todoList}
+        onEdit={handleEditTodo}
+        onDelete={handleDeleteButtonClick}
+      />
+    </MainContainer>
+  );
+
+```
+
 
 
 ## 커밋 컨밴션
