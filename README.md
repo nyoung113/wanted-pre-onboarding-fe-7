@@ -121,7 +121,45 @@ npm run build
 
 ## 컴포넌트 설계
 ### pages
+- Home.js 
+'/'
+- Main.js
+'/todo'
+
+두 페이지로 분리했습니다. 
 ### layout
+위의 두 페이지를 감싸기 위한 Layout.js를 만들었습니다. 
+
+라우팅 처리 시 레이아웃으로 감쌈
+```js
+
+function App() {
+  return (
+    <div className="App">
+      <Routes>
+        <Route
+          exact={true}
+          path="/"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path="/todo"
+          element={
+            <Layout>
+              <Main />
+            </Layout>
+          }
+        />
+      </Routes>
+    </div>
+  );
+}
+
+```
 ### components
 
 ## hooks
